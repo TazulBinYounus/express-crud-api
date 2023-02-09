@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const path = require("path");
 const morgan = require("morgan");
 const Router = express.Router();
@@ -7,6 +8,12 @@ const userRouters = require("./routes/userRoutes.js");
 const fileURLToPath = require("url");
 
 const app = express();
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // settings

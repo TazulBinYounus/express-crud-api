@@ -1,25 +1,22 @@
-const db = require("../models");
+const userService = require("../services/userService.js");
 
 //create main model
 
-const User = db.users;
-
 //get user
 const getAllUser = async (req, res) => {
-  let users = await User.findAll();
+  let users = await userService.getAll();
   res.status(200).send(users);
 };
 
 //get by id
 const getUserById = async (req, res) => {
   let id = req.params.id;
-  let users = await User.findOne({ where: { id: id } });
-  res.status(200).send(users);
+  const user = await userService.findById(id);
+  res.status(200).send(user);
 };
 
 //create user
 const createUser = async (req, res) => {
-  console.log(req.body);
   let requestedData = {
     name: req.body.name,
     username: req.body.username,
@@ -27,21 +24,27 @@ const createUser = async (req, res) => {
     password: req.body.password,
     is_active: true,
   };
-  let user = await User.create(requestedData);
+  let user = await userService.create(requestedData);
   res.status(200).send(user);
 };
 
 //update user
 const updateUser = async (req, res) => {
   let id = req.params.id;
-  const user = await User.update(req.body, { where: { id: id } });
-  res.status(200).send(user);
+  // console.log(id);
+  const user = await userService.update(id);
+  if (user) {
+    const updatedUser = await userService.findById(id);
+    res.status(200).send(updatedUser);
+  } else {
+    res.status(201).send("something went wrong!");
+  }
 };
 
 //delete user
 const deleteUser = async (req, res) => {
   let id = req.params.id;
-  await User.destroy({ where: { id: id } });
+  await userService.destroy(id);
   res.status(200).send("User has been deleted!");
 };
 

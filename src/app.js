@@ -5,7 +5,12 @@ const morgan = require("morgan");
 const Router = express.Router();
 
 const userRouters = require("./routes/userRoutes.js");
+const authRoutes = require("./routes/authRoutes.js");
 const fileURLToPath = require("url");
+const dotenv = require("dotenv");
+
+// get config vars
+dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -28,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 // routes
 // const userRouters = require("./routes/user.routes.js");
 app.use(userRouters);
+app.use(authRoutes);
 
 // static files
 app.use(express.static(path.join(__dirname, "public")));

@@ -9,12 +9,12 @@ const getAll = async () => {
   return await User.findAll();
 };
 
-const create = async () => {
-  return await User.create(requestedData);
+const create = async (payload) => {
+  return await User.create(payload);
 };
 
-const update = async (id) => {
-  return await User.update(req.body, { where: { id: id } });
+const update = async (id, payload) => {
+  return await User.update(payload, { where: { id: id } });
 };
 
 const destroy = async (id) => {

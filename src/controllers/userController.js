@@ -1,7 +1,5 @@
 const userService = require("../services/userService.js");
 
-//create main model
-
 //get user
 const getAllUser = async (req, res) => {
   let users = await userService.getAll();
@@ -31,13 +29,15 @@ const createUser = async (req, res) => {
 //update user
 const updateUser = async (req, res) => {
   let id = req.params.id;
-  // console.log(id);
-  const user = await userService.update(id);
+  const user = await userService.update(id, req.body);
+  console.log(user);
   if (user) {
     const updatedUser = await userService.findById(id);
     res.status(200).send(updatedUser);
   } else {
-    res.status(201).send("something went wrong!");
+    // alert("asd");
+    console.log("something went wrong!");
+    res.status(200).send("something went wrong!");
   }
 };
 

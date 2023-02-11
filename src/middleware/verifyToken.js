@@ -6,16 +6,13 @@ const verifyToken = (req, res, next) => {
   if (!authHeader) return res.sendStatus(401);
   const token = authHeader.split(" ")[1];
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    console.log(err);
-    console.log(decoded);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    // console.log(err);
+    // console.log(user);
     if (err) return res.sendStatus(403); // invalid token
-    res.setHeader("Content-Type", "text/html");
-    res.username = decoded.username;
+    req.user = user;
     next();
   });
-
-  next();
 };
 
 module.exports = verifyToken;

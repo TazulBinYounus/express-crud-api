@@ -6,7 +6,7 @@ const {
 } = require("../validators/userValidator");
 const verifyToken = require("../middleware/verifyToken");
 
-router.get("/users", userController.getAllUser);
+router.get("/users", verifyToken, userController.getAllUser);
 router.get("/users/:id", userController.getUserById);
 router.post(
   "/user-create",

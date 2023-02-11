@@ -20,7 +20,7 @@ const login = async (req, res) => {
     { username: username },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "60s",
+      expiresIn: "1d",
     }
   );
 

@@ -8,6 +8,7 @@ const userRouters = require("./routes/userRoutes.js");
 const authRoutes = require("./routes/authRoutes.js");
 const fileURLToPath = require("url");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 // get config vars
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cookieParser());
 // const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // settings

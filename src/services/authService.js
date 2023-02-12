@@ -5,7 +5,7 @@ const createAccessAndRefreshToken = (foundUser) => {
     { username: foundUser.username },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "1d",
+      expiresIn: "15s",
     }
   );
 
@@ -16,12 +16,12 @@ const createAccessAndRefreshToken = (foundUser) => {
       expiresIn: "1d",
     }
   );
-  //store refresh token to database
+  //update refresh token to database
   const updateRefreshToken = foundUser.update({
     refresh_token: refreshToken,
   });
 
-  return { accessToken, updateRefreshToken };
+  return { accessToken, refreshToken };
 };
 
 module.exports = {

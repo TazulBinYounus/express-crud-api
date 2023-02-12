@@ -2,7 +2,7 @@ const authService = require("../services/authService.js");
 const userService = require("../services/userService.js");
 const db = require("../models");
 const User = db.users;
-
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 //login
@@ -17,16 +17,18 @@ const login = async (req, res) => {
   });
 
   if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
+
+  //get access & refresh token
   const { accessToken, refreshToken } =
     authService.createAccessAndRefreshToken(foundUser);
-  console.log(accessToken);
-  //set cookie to client's browser
+
+  console.log(refreshToken);
+  //set refresh token to client browser
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  //   let users = await userService.getAll();
   res.status(200).json({ data: foundUser, accessToken: accessToken });
 };
 

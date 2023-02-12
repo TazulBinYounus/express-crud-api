@@ -6,7 +6,11 @@ const findById = async (id) => {
 };
 
 const getAll = async () => {
-  return await User.findAll();
+  return await User.findAll({
+    attributes: {
+      exclude: ["createdAt", "updatedAt", "refresh_token", "password"],
+    },
+  });
 };
 
 const create = async (payload) => {
